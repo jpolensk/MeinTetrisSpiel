@@ -26,8 +26,8 @@
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/button_vertical_margin"
-        android:text="@string/button_start_game"
-        />
+        android:nestedScrollingEnabled="false"
+        android:text="@string/button_start_game"/>
 
     <Button
         android:id="@+id/cmdShowScore"

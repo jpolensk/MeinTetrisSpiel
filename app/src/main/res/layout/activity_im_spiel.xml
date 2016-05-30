@@ -10,9 +10,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.zhoosch.meintetrisspiel.ImSpielActivity">
 
-    <com.example.shapedrawable.CustomDrawableView
+    <!--com.example.zhoosch.meintetrisspiel.CustomDrawableView
+        android:id="@+id/cvsImSpiel"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="fill_parent"
+        /-->
 
 </RelativeLayout>

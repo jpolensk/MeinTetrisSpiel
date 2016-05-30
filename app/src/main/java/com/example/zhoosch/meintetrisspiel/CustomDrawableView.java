@@ -8,6 +8,8 @@ import android.view.View;
 
 /**
  * Created by zhoosch on 23.05.2016.
+ *
+ * Diese Klasse übernimmt alles was mit dem Zeichnen zu tun hat.
  */
 public class CustomDrawableView extends View {
   private ShapeDrawable mDrawable;

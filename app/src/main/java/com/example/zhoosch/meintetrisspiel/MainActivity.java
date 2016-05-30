@@ -19,10 +19,12 @@ public class MainActivity extends AppCompatActivity {
   private void initAll() {
     // initialisieren der Listener
     Button cmdStartGame = (Button) findViewById(R.id.cmdStartGame);
+
     cmdStartGame.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
         // TODO: Hier cmdStartGame
-        Intent intent = new Intent(this, ImSpielActivity.class);
+        Intent intent = new Intent(getBaseContext(), ImSpielActivity.class);
+        startActivity(intent);
         // TODO: HIER GEHT ES WEITER WIR STARTEN DIE GAME ACTIVITY...
       }
     });
