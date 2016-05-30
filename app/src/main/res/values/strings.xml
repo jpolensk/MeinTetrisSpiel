@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MeinTetrisSpiel</string>
+    <string name="main_activity_description">Das ist ein erster Test eines Tetrisspieles!\nViel Spaß beim Spielen und möglichst wenig Bugs!</string>
+    <string name="button_start_game">Das Spiel starten...</string>
+    <string name="button_show_score">Bestenliste Anschauen...</string>
+    <string name="button_show_options">Einstellungen ändern...</string>
+    <string name="button_exit">Beenden...</string>
+</resources>

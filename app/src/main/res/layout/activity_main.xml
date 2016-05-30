@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.zhoosch.meintetrisspiel.MainActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/main_activity_description"
+        android:textAlignment="center"
+        />
+    <!-- TODO: ImageButton implementieren -->
+    <Button
+        android:id="@+id/cmdStartGame"
+        style="?android:borderlessButtonStyle"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/button_vertical_margin"
+        android:text="@string/button_start_game"
+        />
+
+    <Button
+        android:id="@+id/cmdShowScore"
+        style="?android:borderlessButtonStyle"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cmdStartGame"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/button_vertical_margin"
+        android:text="@string/button_show_score"
+        />
+
+    <Button
+        android:id="@+id/cmdShowOptions"
+        style="?android:borderlessButtonStyle"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cmdShowScore"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/button_vertical_margin"
+        android:text="@string/button_show_options"
+        />
+
+    <Button
+        android:id="@+id/cmdExit"
+        style="?android:borderlessButtonStyle"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cmdShowOptions"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/button_vertical_margin"
+        android:text="@string/button_exit"
+        />
+</RelativeLayout>
