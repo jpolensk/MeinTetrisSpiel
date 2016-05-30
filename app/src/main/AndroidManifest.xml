@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+Hier steht irgendwas interesssantes wie der Name des Reponsitorys:
+https://github.com/jpolensk/MeinTetrisSpiel
+
+Oder Eine Quellenangabe wie:
+https://examples.javacodegeeks.com/android/core/graphics/canvas-graphics/android-canvas-example/
+-->
 <manifest package="com.example.zhoosch.meintetrisspiel"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
