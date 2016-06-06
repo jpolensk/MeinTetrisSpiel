@@ -26,6 +26,7 @@ public class CustomDrawableView extends View {
   private Context mContext;
   private Paint mPaint;
   private float mx, my; // Moves
+  private GameLogikTetris mGlt;
 
   public CustomDrawableView(Context context, AttributeSet attributset) {
     super(context, attributset);
@@ -42,6 +43,7 @@ public class CustomDrawableView extends View {
     mPaint.setStrokeJoin(Paint.Join.ROUND);
     mPaint.setStrokeWidth(4.0f);
 
+    mGlt = new GameLogikTetris(this);
     // TODO: es werden defintiv noch mehr Farben benötigt
   }
 
