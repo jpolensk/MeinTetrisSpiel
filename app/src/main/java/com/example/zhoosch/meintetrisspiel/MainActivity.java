@@ -22,24 +22,24 @@ public class MainActivity extends AppCompatActivity {
 
     cmdStartGame.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
-        // TODO: Hier cmdStartGame
+        // TODO: Daten für das Spiel bereit stellen?
         Intent intent = new Intent(getBaseContext(), ImSpielActivity.class);
         startActivity(intent);
-        // TODO: HIER GEHT ES WEITER WIR STARTEN DIE GAME ACTIVITY...
+        // TODO: Daten vom letzten Spiel speichern?
       }
     });
 
     Button cmdShowScore = (Button) findViewById(R.id.cmdShowScore);
     cmdShowScore.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
-        // TODO: Hier cmdShowScore
+        // TODO: Hier cmdShowScore eine Datenbankanbindung scheint hier sinnvoll mit grafischer ausgabe
       }
     });
 
     Button cmdShowOptions = (Button) findViewById(R.id.cmdShowOptions);
     cmdShowOptions.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
-        // TODO: Hier cmdShowOptions
+        // TODO: Hier cmdShowOptions Musik? Style? Templates? Schwierigkeitsgrad?
       }
     });
 

@@ -52,7 +52,7 @@ public class CustomDrawableView extends View {
     super.onSizeChanged(width, height, oldWidth, oldHeight);
     mBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
     mCanvas = new Canvas(mBitmap);
-    // TODO: Flexible Unterteilung des Spielfeldes mit veränderten Ansichten (nimm die Höhe!!!)
+    // TODO: Flexible Unterteilung des Spielfeldes mit veränderten Ansichten (nimm die Höhe!!!) und Ausrichtung!!!
   }
 
   @Override

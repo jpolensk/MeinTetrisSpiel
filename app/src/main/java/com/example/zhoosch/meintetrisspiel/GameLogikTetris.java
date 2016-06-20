@@ -27,8 +27,7 @@ public class GameLogikTetris {
   }
 
   private void runPhysikForTetrisBlock() {
-    // TODO den Block nach unten bewegen bzw. den nächsten \
-    // Spielabschnitt vorbereiten oder freigeben
+    // TODO den Block nach unten bewegen bzw. den nächsten Spielabschnitt vorbereiten oder freigeben
   }
 
   private void runPhysikAfterClean(boolean[] bLines) {
@@ -51,12 +50,12 @@ public class GameLogikTetris {
   private boolean[] checkLines4Kill() {
     boolean[] bVecClean = new boolean[GAME_FIELD_HEIGHT];
     boolean bLastIsCleaned = false;
-    boolean bClearLine = false;
+    boolean bClearLine;
 
     clkNewLine:
     for (int y = 0; y < GAME_FIELD_HEIGHT; y++) {
       bClearLine = true;
-      for (int x = 0; x < -GAME_FIELD_WIDTH; x++) {
+      for (int x = 0; x < GAME_FIELD_WIDTH; x++) {
         if (mGameField[y][x] == 0) {
           bClearLine = false;
           y = y % GAME_FIELD_WIDTH + GAME_FIELD_WIDTH;
@@ -68,6 +67,7 @@ public class GameLogikTetris {
         bVecClean[y] = true;
       }
     }
+    return (bVecClean);
   }
 
   private void clearLines() {
@@ -79,8 +79,8 @@ public class GameLogikTetris {
      * 1.)  2.)  3.)  4.)  5.)  6.)  7.)
      * ##   #    #    #   #     #   #
      * ##   #    ##  ##   #     #   ##
-     * #     #  #    ##   ##   #
-     * #
+     *      #     #  #    ##   ##   #
+     *      #
      */
     private final boolean KIND_OF_BLOCK[][][] = {
             {{true, true}, {true, true}},
