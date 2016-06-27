@@ -90,6 +90,7 @@ public class CustomDrawableView extends View {
 
   @Override
   public boolean onTouchEvent(MotionEvent event) {
+    // TODO: Hier müssen Schalter und zu löschende Statuswerte Implementiert werden, die durch den Elternthread abgefragt werden können
     float x = event.getX();
     float y = event.getY();
 

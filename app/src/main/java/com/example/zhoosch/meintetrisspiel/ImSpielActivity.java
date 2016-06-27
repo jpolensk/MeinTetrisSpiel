@@ -14,6 +14,7 @@ import java.util.concurrent.Semaphore;
 public class ImSpielActivity extends AppCompatActivity implements Runnable {
 
   private CustomDrawableView mCanvas;
+  private GameLogikTetris mGameLogikTetris;
   private Thread mLocalGameThread = null;
 
   @Override
@@ -22,6 +23,7 @@ public class ImSpielActivity extends AppCompatActivity implements Runnable {
     setContentView(R.layout.activity_im_spiel);
 
     mCanvas = (CustomDrawableView) findViewById(R.id.cvsImSpiel);
+    mGameLogikTetris = new GameLogikTetris(mCanvas);
 
     if (mLocalGameThread == null) {
       mLocalGameThread = new Thread(this);
@@ -43,6 +45,7 @@ public class ImSpielActivity extends AppCompatActivity implements Runnable {
       final Semaphore mutexRefreshing = new Semaphore(1);
       int refresh = 0;
 
+      this.mGameLogikTetris.wait();
 
       Timer timeRefresh = new Timer();
       timeRefresh.scheduleAtFixedRate(new TimerTask() {
@@ -83,18 +86,8 @@ public class ImSpielActivity extends AppCompatActivity implements Runnable {
   }
 
   @Override
-  protected void onStop() {
-    super.onStop();
-    if (mLocalGameThread.isAlive() && !mLocalGameThread.isInterrupted()) {
-      mLocalGameThread.interrupt();
-      mLocalGameThread = null;
-      Log.d("lifecycle", "onStop Thread interrupted");
-    }
-    Log.d("LIFECYCLE", "onStop invoked");
-  }
-
-  @Override
   protected void onPause() {
+    // Stop 1
     super.onPause();
     if (mLocalGameThread.isAlive() && !mLocalGameThread.isInterrupted()) {
       mLocalGameThread.interrupt();
@@ -102,6 +95,18 @@ public class ImSpielActivity extends AppCompatActivity implements Runnable {
       Log.d("lifecycle", "onPause Thread interrupted");
     }
     Log.d("LIFECYCLE", "onPause invoked");
+  }
+
+  @Override
+  protected void onStop() {
+    // Stop 2
+    super.onStop();
+    if (mLocalGameThread.isAlive() && !mLocalGameThread.isInterrupted()) {
+      mLocalGameThread.interrupt();
+      mLocalGameThread = null;
+      Log.d("lifecycle", "onStop Thread interrupted");
+    }
+    Log.d("LIFECYCLE", "onStop invoked");
   }
 
   @Override

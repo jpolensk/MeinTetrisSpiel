@@ -1,23 +1,88 @@
 package com.example.zhoosch.meintetrisspiel;
 
-import android.graphics.Color;
+import android.util.Log;
 
 import java.util.Random;
 
 /**
  * Created by zhoosch on 06.06.2016.
+ *
+ * -Das Spielfeld wird von MAX nach MIN bespielt das entspricht von Oben nach Unten.
  */
 public class GameLogikTetris {
   private static final int GAME_FIELD_WIDTH = 20;
   private static final int GAME_FIELD_HEIGHT = 60;
+  private static final int GAME_FIELD_COLORS = 4;
   private CustomDrawableView mCdv;
   private TetrisBlock mTBInAction;
   private TetrisBlock mTBNextOne;
+  private int mLevel;
   private int[][] mGameField;
+  private int[][] mGameFieldDraw;
+  private int mBlockPosX;
+  private int mBlockPosY;
+  private int mBlockHeight;
+  private int mBlockWidth;
+
+
 
   GameLogikTetris(CustomDrawableView cdv) {
     mCdv = cdv;
-    mGameField = new int[GAME_FIELD_WIDTH][GAME_FIELD_HEIGHT];
+    mGameField = new int[GAME_FIELD_HEIGHT][GAME_FIELD_WIDTH];
+    mGameFieldDraw = mGameField.clone();
+  }
+
+  private boolean startANewGame(int iLevel, int iFragmentedLines) {
+    Log.d("Status:", "Ein neues Spiel wurde gestartet.");
+    this.clearGameField();
+    if (iFragmentedLines > 0) {
+      Log.d("Status:", "Befülle Spielfeld mit " + iFragmentedLines + " Müllzeilen!");
+      if (iFragmentedLines > (GAME_FIELD_HEIGHT / 2)) {
+        Log.d("EINGABEFEHLER:", "Es ist nicht möglich, mehr als 50% des Spielfeldes mit Müllzeilen zu befüllen!");
+        iFragmentedLines = GAME_FIELD_HEIGHT / 2;
+      }
+      Random rd = new Random();
+      for (int i = 0; i < iFragmentedLines; i++) {
+        for (int j = 0; j < GAME_FIELD_WIDTH; j++) {
+          mGameField[i][j] = rd.nextInt(GAME_FIELD_COLORS) + 1;
+        }
+        mGameField[i][rd.nextInt(GAME_FIELD_WIDTH)] = 0;
+      }
+    }
+    Log.d("Status:", "Setze Spiellevel auf: " + iLevel);
+    mLevel = iLevel;
+
+    Log.d("Status:", "Erstelle einen neuen Bock für NEXT.");
+    mTBNextOne = newTetrisBlock();
+    insertABlock();
+
+
+    return true;
+  }
+
+  private boolean startANewGame() {
+    return this.startANewGame(0, 0);
+  }
+
+  private boolean insertABlock() {
+    Log.d("Status:", "Next Block wird aktueller Block!");
+    mTBInAction = mTBNextOne;
+    Log.d("Status:", "Erstelle einen neuen Bock für NEXT.");
+    mTBNextOne = newTetrisBlock();
+    Log.d("Status:", "Kopiere den aktuellen Block ins Spielfeld.");
+
+    mBlockPosX = GAME_FIELD_WIDTH / 2 - 1;   // hat die Breite x deswegen -1
+    mBlockPosY = GAME_FIELD_HEIGHT - 1;    // startet mit 0 deswegen -1
+    mBlockHeight = mTBInAction.getHeight();
+    mBlockWidth = mTBInAction.getWidth();
+
+    for (int i = mBlockPosX; i < mBlockPosX + mBlockWidth; i++) {
+      for (int j = mBlockPosY; j < mBlockPosY + mBlockHeight; j++) {
+        // TODO: HIER BIN ICH!!!
+      }
+    }
+
+    return true;
   }
 
   private TetrisBlock newTetrisBlock() {
@@ -28,6 +93,7 @@ public class GameLogikTetris {
 
   private void runPhysikForTetrisBlock() {
     // TODO den Block nach unten bewegen bzw. den nächsten Spielabschnitt vorbereiten oder freigeben
+    // begrenzen auf das modifizierte Feld und dessen größe 4x4 aktuell
   }
 
   private void runPhysikAfterClean(boolean[] bLines) {
@@ -45,6 +111,7 @@ public class GameLogikTetris {
   private void blinkingLines(boolean[] bLines) {
     // TODO: blinken der zu löschenden Zeilen animieren
     // hier wird remote zur höheren Instanz kommunziert
+    // kleine pause wegen animationen usw. rückkopplung in gamethread?
   }
 
   private boolean[] checkLines4Kill() {
@@ -74,90 +141,19 @@ public class GameLogikTetris {
 
   }
 
-  class TetrisBlock {
-    /**
-     * 1.)  2.)  3.)  4.)  5.)  6.)  7.)
-     * ##   #    #    #   #     #   #
-     * ##   #    ##  ##   #     #   ##
-     *      #     #  #    ##   ##   #
-     *      #
-     */
-    private final boolean KIND_OF_BLOCK[][][] = {
-            {{true, true}, {true, true}},
-            {{true}, {true}, {true}, {true}},
-            {{true, false}, {true, true}, {false, true}},
-            {{false, true}, {true, true}, {true, false}},
-            {{true, false}, {true, false}, {true, true}},
-            {{false, true}, {false, true}, {true, true}},
-            {{true, false}, {true, true}, {true, false}}};
-
-    private boolean[][] mElement;
-    private int mBlockID;
-    private Color mColor;
-
-    // Random Block
-    TetrisBlock() {
-      Random rd = new Random();
-      mBlockID = rd.nextInt(7);
-      mElement = KIND_OF_BLOCK[mBlockID].clone();
-
-      // TODO: eine Farbe generieren momentan alles Schwarz default
+  /**
+   * Setzt das Spielfeld zurück und löscht alle Blöcke in diesem.
+   *
+   * @return true - wenn der Löschvorgang durchgeführt wurde sonst false.
+   */
+  private boolean clearGameField() {
+    java.util.Arrays.fill(mGameField, false);
+    if (java.util.Arrays.asList(mGameField).contains(true)) {
+      Log.d("BUG:", "Das Spielfeld kann nicht gelöscht werden!");
+      return false;
     }
-
-    public int getHeight() {
-      return (mElement.length);
-    }
-
-    public int getWidth() {
-      return (mElement[0].length);
-    }
-
-    public Color getColor() {
-      return (mColor);
-    }
-
-    public void rotateLeft() {
-      // TODO: prüfen ob links auch links rum dreht
-      boolean[][] tempElement = new boolean[mElement[0].length][mElement.length];
-      for (int x = 0; x < mElement.length; x++) {
-        for (int y = 0; y < mElement[0].length; y++) {
-          tempElement[(tempElement.length - 1) - y][x] = mElement[x][y];
-        }
-      }
-      mElement = tempElement;
-    }
-
-    public void rotateRight() {
-      // TODO: prüfen ob rechts auch rechts rum dreht
-      boolean[][] tempElement = new boolean[mElement[0].length][mElement.length];
-      for (int x = 0; x < mElement.length; x++) {
-        for (int y = 0; y < mElement[0].length; y++) {
-          tempElement[y][(mElement[0].length - 1) - x] = mElement[x][y];
-        }
-      }
-      mElement = tempElement;
-    }
-
-    public boolean[][] getBlock() {
-      return (mElement);
-    }
-
-    public boolean[][] get4x4Block() {
-      boolean[][] retBlock = {
-              {false, false, false, false},
-              {false, false, false, false},
-              {false, false, false, false},
-              {false, false, false, false}};
-
-      int oX = (mElement[0].length < 3) ? 1 : 0;
-      int oY = (mElement.length < 3) ? 1 : 0;
-      for (int x = 0; x < mElement[0].length; x++) {
-        for (int y = 0; y < mElement.length; y++) {
-          retBlock[x + oX][y + oY] = mElement[x][y];
-        }
-      }
-      return (retBlock);
-    }
+    Log.d("Status:", "Das Spielfeld wurde gelöscht.");
+    return true;
   }
 }
 
